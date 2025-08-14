@@ -13,8 +13,6 @@ public class HhVacancyService {
 
     private final RestTemplate restTemplate = new RestTemplate();
     private static final String BASE_URL = "https://api.hh.ru/vacancies";
-
-    // Ключевое слово для поиска
     private final String keyword = "java";
     // ID региона/города (area) в hh.ru; например, 1 — Москва, 2 — Санкт-Петербург
 //    private final int area = 16;
@@ -31,7 +29,6 @@ public class HhVacancyService {
         int totalPages = Integer.MAX_VALUE;
         int globalCount = 1;
 
-        // Счётчики для удалённой и не удалённой работы
         int remoteCount = 0;
         int nonRemoteCount = 0;
 
