@@ -47,7 +47,12 @@ public class HhVacancyService {
                     .queryParam("page", page)
                     .build()
                     .toUriString();
-
+            //werwerwer
+            //234234
+            //23423523
+            //435345
+            //234234
+            System.out.println("333 "+url);
             @SuppressWarnings("unchecked")
             Map<String, Object> response = restTemplate.getForObject(url, Map.class);
             if (response == null || !response.containsKey("items")) {

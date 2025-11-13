@@ -1,14 +1,16 @@
+server:
+  port: ${SERVER_PORT:8080}
+
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5433/mydb
-    username: postgres
-    password: postgres
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5433/mydb}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:postgres}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
       ddl-auto: none
     show-sql: false
-
   flyway:
     enabled: true
     baseline-on-migrate: true
@@ -16,7 +18,7 @@ spring:
 
 
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
     consumer:
       group-id: hh-consumer-group
       auto-offset-reset: earliest

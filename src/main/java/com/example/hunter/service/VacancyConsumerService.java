@@ -23,6 +23,14 @@ public class VacancyConsumerService {
     public void consumeVacancyId(String vacancyId) {
         System.out.println("Consumer: получил vacancyId=" + vacancyId + " из Kafka");
 
+
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
         // Запрос деталей вакансии
         ResponseEntity<Map<String, Object>> resp = hhApiClient.getVacancyById(vacancyId);
         if (!resp.getStatusCode().is2xxSuccessful() || resp.getBody() == null) {
@@ -61,7 +69,8 @@ public class VacancyConsumerService {
 
         // description (HTML-текст)
         String description = (String) detail.get("description");
-        vacancy.setDescription(description != null ? description : "");
+        String branded_description = (String) detail.get("branded_description");
+        vacancy.setDescription(description != null ? description + branded_description : "");
 
         // Сохраняем. Если UNIQUE (vacancy_id) нарушен, ловим исключение и игнорируем.
         try {
