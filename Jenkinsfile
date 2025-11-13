@@ -15,10 +15,12 @@ pipeline {
     }
 
     stage('Build Jar') {
-      steps {
-        sh './gradlew clean bootJar -x test'
-      }
+        steps {
+            sh 'chmod +x ./gradlew'
+            sh './gradlew clean bootJar -x test'
+        }
     }
+
 
     stage('Docker Build') {
       steps {
