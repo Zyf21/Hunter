@@ -48,7 +48,7 @@ public class HhVacancyService {
                     .build()
                     .toUriString();
 
-            System.out.println("333 "+url);
+
             @SuppressWarnings("unchecked")
             Map<String, Object> response = restTemplate.getForObject(url, Map.class);
             if (response == null || !response.containsKey("items")) {
