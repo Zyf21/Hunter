@@ -48,8 +48,6 @@ public class HhVacancyService {
                     .build()
                     .toUriString();
 
-//шршвапшвапшшва
-            //sdfsdfisdfsdf
             @SuppressWarnings("unchecked")
             Map<String, Object> response = restTemplate.getForObject(url, Map.class);
             if (response == null || !response.containsKey("items")) {
