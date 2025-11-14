@@ -12,25 +12,37 @@
 #ENTRYPOINT ["java","-jar","/app/app.jar"]
 
 
-# stage 1: build
-FROM gradle:8-jdk17 AS build
-WORKDIR /home/gradle/project
+## stage 1: build
+#FROM gradle:8-jdk17 AS build
+#WORKDIR /home/gradle/project
+#
+## Копируем только файлы gradle и зависимости, чтобы кешировать слои
+#COPY build.gradle settings.gradle gradlew ./
+#COPY gradle gradle/
+#RUN gradle --no-daemon dependencies || true
+#
+## Копируем остальные исходники
+#COPY . .
+## Собираем jar без тестов
+#RUN ./gradlew bootJar --no-daemon -x test
+#
+## stage 2: runtime
+#FROM eclipse-temurin:17-jre
+#WORKDIR /app
+#COPY --from=build /home/gradle/project/build/libs/*.jar app.jar
+#ENTRYPOINT ["java", "-jar", "/app/app.jar"]
 
-# Копируем только файлы gradle и зависимости, чтобы кешировать слои
-COPY build.gradle settings.gradle gradlew ./
-COPY gradle gradle/
-RUN gradle --no-daemon dependencies || true
 
-# Копируем остальные исходники
-COPY . .
-# Собираем jar без тестов
-RUN ./gradlew bootJar --no-daemon -x test
-
-# stage 2: runtime
+# Dockerfile.runtime (или просто Dockerfile)
 FROM eclipse-temurin:17-jre
 WORKDIR /app
-COPY --from=build /home/gradle/project/build/libs/*.jar app.jar
+
+# Копируем уже собранный jar (сборка jar должна выполняться раньше в pipeline)
+ARG JAR_FILE=build/libs/*.jar
+COPY ${JAR_FILE} app.jar
+
 ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+
 
 
 ## stage 1: build

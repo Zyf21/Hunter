@@ -1,4 +1,4 @@
-version: '3.8'
+#version: '3.8'
 
 services:
   zookeeper:
@@ -43,13 +43,13 @@ services:
       - pgdata:/var/lib/postgresql/data
 
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    volumes:
-      - gradle_cache:/home/gradle/.gradle
     image: myapp:latest
-    container_name: my_app
+    # можно оставить build: для локальной разработки, но CI будет запускать --no-build
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
+    volumes:
+      - gradle_cache:/home/gradle/.gradle   # опционально для локальной dev-сборки
     depends_on:
       - kafka
       - postgres
