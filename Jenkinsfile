@@ -74,7 +74,7 @@ pipeline {
     }
     stage('Deploy') {
       steps {
-        sh "docker compose -f ${COMPOSE_FILE} up -d --no-build app"
+        sh "docker-compose -f ${COMPOSE_FILE} up -d --no-build app"
       }
     }
   }
