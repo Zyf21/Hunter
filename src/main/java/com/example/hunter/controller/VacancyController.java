@@ -16,6 +16,7 @@ public class VacancyController {
 
     @GetMapping("/collect")
     public ResponseEntity<String> collectVacancies() {
+        //test
         vacancyProducerService.collectAndSendNewIdsToKafka();
         return ResponseEntity.ok("Запущен процесс сбора вакансий и отправки новых ID в Kafka");
     }
